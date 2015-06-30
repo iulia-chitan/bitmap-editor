@@ -17,6 +17,23 @@ describe Cell do
 
   end
 
+  it 'should initialize a new cell in the matrix' do
+    expect(Cell.new().value).to eq('O')
+  end
+
+  [1, 5, 0, 45, 37, '/'].each do |k|
+    it 'should raise error if color char is not correct' do
+      cell = Cell.new
+      expect{ cell.color(k)}.to raise_error(RuntimeError, 'Please provide a valid cell color')
+    end
+  end
 
 
+  ['A','D','W','Z','M'].each do |k|
+    it 'should color the cell' do
+      cell = Cell.new
+      cell.color(k)
+      expect(cell.value).to eq(k)
+    end
+  end
 end
