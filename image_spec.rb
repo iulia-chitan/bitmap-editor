@@ -17,7 +17,7 @@ describe Image do
 
 
   [[1,2], [2,2], [3,2]].each do |k|
-    it 'should initialize a new image matrice' do
+    it 'should initialize a new image matrix' do
       expect(Image.new(*k).matrix).to eq(Array.new(k[1]){Array.new(k[0]) { '0' }})
     end
 
