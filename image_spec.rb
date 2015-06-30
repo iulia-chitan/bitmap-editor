@@ -18,9 +18,23 @@ describe Image do
 
   [[1,2], [2,2], [3,2]].each do |k|
     it 'should initialize a new image matrix' do
-      expect(Image.new(*k).matrix).to eq(Array.new(k[1]){Array.new(k[0]) { '0' }})
+      grid = Image.new(*k).matrix
+      expect(grid.flatten.map(&:value).uniq).to eq(['O'])
+      expect(grid.size).to eq(k[0])
+      expect(grid.map{|e| e.size}.uniq).to eq([k[1]])
     end
 
+  end
+
+  before(:each) do
+    @image =  Image.new(5,5)
+    @grid = @image.matrix
+  end
+  [[1,1], [2,4], [5,3]].each do |k|
+    it 'should get the right coordinates' do
+       cell = @grid[k.first - 1][k.last - 1]
+       expect(@image.get_cell_coordinates(cell)).to eq(k)
+    end
   end
 
 
