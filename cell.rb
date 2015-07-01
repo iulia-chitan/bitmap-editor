@@ -10,11 +10,13 @@ class Cell
   end
 
 
+  #sets cell value to given param
   def color(val)
     raise 'Please provide a valid cell color' unless ('A'..'Z').include?(val)
     self.value = val
   end
 
+  #gets all neighbors from image matrix
   def get_neighbors image
     coord = image.get_cell_coordinates(self)
     v_neighbors = [image.get_cell(coord[0], coord[1]-1), image.get_cell(coord[0], coord[1]+1)]
@@ -22,7 +24,7 @@ class Cell
     neighbors = (v_neighbors + h_neighbors).compact
   end
 
-
+  #gets the region from the image given the cells color
   def get_region_cells image, color, visited = [], in_region = []
     all_cells = image.all_cells
     visited << self

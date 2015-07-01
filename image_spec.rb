@@ -1,6 +1,33 @@
 require 'rspec'
 require_relative 'image'
 
+RSpec::Matchers.define :match_stdout do |check|
+
+  @capture = nil
+
+  match do |block|
+
+    begin
+      stdout_saved = $stdout
+      $stdout      = StringIO.new
+      block.call
+    ensure
+      @capture     = $stdout
+      $stdout      = stdout_saved
+    end
+
+    @capture.string.match check
+  end
+
+
+  def supports_block_expectations?
+    true
+  end
+end
+
+
+
+
 describe Image do
 
   [[], [1], [1,2,3], nil].each do |k|
@@ -15,7 +42,6 @@ describe Image do
     end
   end
 
-
   [[1,2], [2,2], [3,2]].each do |k|
     it 'should initialize a new image matrix' do
       grid = Image.new(*k).matrix
@@ -25,6 +51,7 @@ describe Image do
     end
 
   end
+
 
   before(:each) do
     @image =  Image.new(5,5)
@@ -54,7 +81,42 @@ describe Image do
 
 
 
+  it 'should display the image matrix' do
+    image = Image.new(2,2)
+    expect { image.show }.to match_stdout("O\tO\nO\tO")
+  end
 
+  it 'should clear the image matrix' do
+    image = Image.new(2,2)
+    image.all_cells.each{|c| c.color 'M'}
+    image.clear_image
+    expect( image.all_cells.map(&:value).uniq ).to eq(['O'])
+  end
 
+  it 'should color the pixel' do
+    image = Image.new(2,2)
+    image.color_pixel(2,2,'M')
+    expect( image.get_cell(2,2).value ).to eq('M')
+  end
+
+  it 'should fill in region' do
+    image = Image.new(2,2)
+    image.fill_in(2,1,'M')
+    expect( image.all_cells.map(&:value).uniq ).to eq(['M'])
+  end
+
+  it 'should draw a vertical line with color' do
+    image = Image.new(2,2)
+    image.draw_vertical 1,2,1,'M'
+    expect( image.get_cell(1,1).value ).to eq('M')
+    expect( image.get_cell(2,1).value ).to eq('M')
+  end
+
+  it 'should draw an horizontal line with color' do
+    image = Image.new(2,2)
+    image.draw_horizontal 1,1,2,'M'
+    expect( image.get_cell(1,1).value ).to eq('M')
+    expect( image.get_cell(1,2).value ).to eq('M')
+  end
 
 end
