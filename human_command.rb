@@ -17,7 +17,7 @@ class HumanCommand
       when 1 then /(^C|S|X$){1}/
       when 3 then /(^I(\s\d){2}$){1}/
       when 4 then /(^L|F){1}(\s\d){2}\s([A-Z]$){1}/
-      when 5 then /(^V|H){1}(\t\d){3}([A-Z]$){1}/
+      when 5 then /(^V|H){1}(\s\d){3}([A-Z]$){1}/
     end
     return regex
   end
