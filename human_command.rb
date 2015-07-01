@@ -5,10 +5,14 @@ class HumanCommand
   #validate string argument
   def self.check_cmd_str str
     param_no = str.split(' ').size
-    raise 'Please insert correct command string' unless [1,3,4,5].include?(param_no)
     regex = get_string_regex(param_no)
-    raise 'Please insert correct command string' if str.match(regex).nil?
-    return true
+    if ([1,3,4,5].include?(param_no) && !str.match(regex).nil?)
+      return true
+    else
+      puts 'Please insert valid command string'
+      return false
+    end
+
   end
 
   # check if string argument matches all command forms
