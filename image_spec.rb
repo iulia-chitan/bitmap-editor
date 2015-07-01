@@ -40,6 +40,20 @@ describe Image do
 
 
 
+  it 'should return correct cells on vertical' do
+    coord = [2, 3, 4]
+    cells = [@image.get_cell(2,4), @image.get_cell(3,4)]
+    expect(@image.get_v_cells(*coord)).to eq(cells)
+  end
+
+  it 'should return correct cells on horizontal' do
+    coord =  [2, 3, 4]
+    cells = [@image.get_cell(2,3), @image.get_cell(2,4)]
+    expect(@image.get_h_cells(*coord)).to eq(cells)
+  end
+
+
+
 
 
 

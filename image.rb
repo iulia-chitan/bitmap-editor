@@ -1,3 +1,5 @@
+require_relative 'cell'
+
 class Image
 
   attr_reader :matrix, :rows, :cols
@@ -36,6 +38,24 @@ class Image
     matrix[x-1][y-1] rescue nil
   end
 
+
+  def get_v_cells x1, x2, y
+    cells = []
+    x_range = x1 > x2 ? x1.downto(x2).collect { |i| i} : x1.upto(x2).collect { |i| i}
+    x_range.each do |x|
+      cells << get_cell(x, y)
+    end
+    return cells
+  end
+
+  def get_h_cells x, y1, y2
+    cells = []
+    y_range = y1 > y2 ? y1.downto(y2).collect { |i| i} : y1.upto(y2).collect { |i| i}
+    y_range.each do |y|
+      cells << get_cell(x, y)
+    end
+    return cells
+  end
 
 
 end
