@@ -14,6 +14,10 @@ class Image
     Array.new(x) { Array.new(y) { Cell.new } }
   end
 
+  def all_cells
+    matrix.flatten
+  end
+
 
   def get_cell_coordinates cell
     coord = []
@@ -26,5 +30,12 @@ class Image
     end
     return coord
   end
+
+  def get_cell x, y
+    return nil if x-1 < 0 || y-1 < 0 || x-1 >= rows || y-1 >= cols
+    matrix[x-1][y-1] rescue nil
+  end
+
+
 
 end

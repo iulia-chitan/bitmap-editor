@@ -28,14 +28,18 @@ describe Image do
 
   before(:each) do
     @image =  Image.new(5,5)
-    @grid = @image.matrix
   end
+
+
   [[1,1], [2,4], [5,3]].each do |k|
     it 'should get the right coordinates' do
-       cell = @grid[k.first - 1][k.last - 1]
+       cell = @image.get_cell(k.first, k.last)
        expect(@image.get_cell_coordinates(cell)).to eq(k)
     end
   end
+
+
+
 
 
 

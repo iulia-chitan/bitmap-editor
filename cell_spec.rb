@@ -1,5 +1,6 @@
 require 'rspec'
 require_relative 'cell'
+require_relative 'image'
 
 describe Cell do
 
@@ -36,4 +37,29 @@ describe Cell do
       expect(cell.value).to eq(k)
     end
   end
+
+
+  it 'should return correct neighbors' do
+    @image =  Image.new(3,3)
+    @cell = @image.get_cell(1,2)
+    @cell.color('Z')
+
+    @neighbors = @cell.get_neighbors(@image)
+    expect(@neighbors.map{|c| @image.get_cell_coordinates(c)}).to eq([[1,1], [1,3], [2,2]])
+  end
+
+
+  it 'should return correct region cells' do
+    @image =  Image.new(2,2)
+    @cell = @image.get_cell(2,2)
+    @cell2 = @image.get_cell(1,2)
+    @cell.color('Z')
+    @cell2.color 'Z'
+    @reg = @cell.get_region_cells(@image, @cell.value, [], [])
+    expect(@reg).to eq([@cell, @cell2])
+  end
+
+
+
+
 end
